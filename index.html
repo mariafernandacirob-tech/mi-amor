@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti, mi amor 💜</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Nunito:wght@400;500&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(160deg, #faf5ff 0%, #f3e8ff 55%, #fdf4ff 100%);
+      min-height: 100vh;
+      font-family: 'Nunito', sans-serif;
+      color: #4c1d72;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+    @keyframes fadein { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes petal { 0%{transform:translateY(-10px) rotate(0deg);opacity:1} 100%{transform:translateY(110vh) rotate(380deg);opacity:0} }
+    @keyframes popIn { 0%{transform:scale(0.5);opacity:0} 60%{transform:scale(1.06)} 100%{transform:scale(1);opacity:1} }
+    @keyframes bearFloat { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-10px) rotate(4deg)} }
+    @keyframes shimmer { 0%,100%{box-shadow:0 0 0px #c084fc} 50%{box-shadow:0 0 20px #c084fcaa} }
+
+    .heart-beat { animation: pulse 1.5s ease-in-out infinite; display:inline-block; }
+    .float-anim { animation: float 3.2s ease-in-out infinite; display:inline-block; }
+
+    .section { display:none; }
+    .section.active { display:block; animation: fadein 0.4s ease; }
+
+    /* Pétalos */
+    .petal {
+      position: fixed;
+      top: 0;
+      pointer-events: none;
+      animation: petal linear infinite;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    /* Osito */
+    .bear {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 80px;
+      animation: bearFloat 3.5s ease-in-out infinite;
+      z-index: 100;
+      filter: drop-shadow(0 4px 10px #c084fc55);
+    }
+
+    /* Encabezado */
+    header {
+      text-align: center;
+      padding: 48px 24px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 500;
+      color: #6b21a8;
+      margin: 12px 0 6px;
+    }
+
+    header p {
+      color: #9333ea;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .quote-box {
+      background: #fff;
+      border: 0.5px solid #e9d5ff;
+      border-radius: 14px;
+      padding: 16px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .quote-box p {
+      color: #6b21a8;
+      font-size: 14px;
+      line-height: 1.9;
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Menú */
+    nav {
+      padding: 18px 14px 22px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-btn {
+      background: #fff;
+      border: 1px solid #d8b4fe;
+      color: #7e22ce;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #e9d5ff;
+      color: #6b21a8;
+      border-color: #c084fc;
+    }
+
+    /* Contenido */
+    main {
+      padding: 0 24px 80px;
+      max-width: 540px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: #faf5ff;
+      border: 0.5px solid #e9d5ff;
+      border-radius: 18px;
+      padding: 30px 28px;
+    }
+
+    .card-icon {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 14px;
+    }
+
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      color: #7e22ce;
+      font-size: 19px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      color: #4c1d72;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .emoji-row {
+      margin-top: 16px;
+      font-size: 20px;
+      letter-spacing: 6px;
+      text-align: center;
+    }
+
+    /* Botón sí -->*/
+    .yes-btn {
+      background: #e9d5ff;
+      color: #6b21a8;
+      border: 1.5px solid #c084fc;
+      padding: 14px 38px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      animation: shimmer 2.2s ease-in-out infinite;
+      transition: transform 0.2s;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .yes-btn:hover { transform: scale(1.05); }
+
+    .response-box {
+      display: none;
+      background: #faf5ff;
+      border: 1px solid #c084fc;
+      border-radius: 16px;
+      padding: 28px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .response-box.show {
+      display: block;
+      animation: popIn 0.5s ease;
+    }
+
+    .response-box h3 {
+      font-family: 'Playfair Display', serif;
+      color: #6b21a8;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .response-box p {
+      color: #4c1d72;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .response-emoji {
+      font-size: 40px;
+      margin-bottom: 14px;
+    }
+
+    .center-text { text-align: center; }
+  </style>
+</head>
+<body>
+
+  <!-- Osito -->
+  <div class="bear">🧸</div>
+
+  <!-- Pétalos -->
+  <div id="petals"></div>
+
+  <!-- Encabezado -->
+  <header>
+    <div class="heart-beat" style="font-size:50px; display:block; margin-bottom:14px;">💜</div>
+    <h1>Para ti, mi amor 💜</h1>
+    <p>Cada razón es un pedacito de mi corazón</p>
+    <div class="quote-box">
+      <p>"Las circunstancias pueden ser muy difíciles, los caminos pueden torcerse y el mundo ponerse de cabeza... pero lo que siento por ti es infinitamente más grande que todo eso. Siempre lo será." 🌷</p>
+    </div>
+  </header>
+
+  <!-- Menú -->
+  <nav>
+    <button class="nav-btn active" onclick="show('s1',this)">🌸 Tu sonrisa</button>
+    <button class="nav-btn" onclick="show('s2',this)">🌙 Tu forma de ser</button>
+    <button class="nav-btn" onclick="show('s3',this)">🦋 Me haces mejor</button>
+    <button class="nav-btn" onclick="show('s4',this)">🎵 Nuestra historia</button>
+    <button class="nav-btn" onclick="show('s5',this)">💌 Te amo porque...</button>
+    <button class="nav-btn" onclick="show('s6',this)">🌹 ¿Toda la vida?</button>
+  </nav>
+
+  <!-- Contenido -->
+  <main>
+
+    <div id="s1" class="section active">
+      <div class="card">
+        <div class="card-icon"><span class="float-anim">🌸</span></div>
+        <h2>Tu sonrisa lo cambia todo</h2>
+        <p>Cuando sonríes, el mundo entero se detiene un momento y todo lo feo desaparece ✨. Esa sonrisa tiene un poder que quizás no dimensionas — convierte cualquier día oscuro en algo completamente luminoso. Me ha salvado en momentos donde nada más podía. Es mi lugar favorito en todo el universo 🌷, y cada vez que aparece, mi corazón decide que vale la pena todo. Haría lo que fuera con tal de verte sonreír, solo para sentir eso una y otra vez.</p>
+      </div>
+    </div>
+
+    <div id="s2" class="section">
+      <div class="card">
+        <div class="card-icon"><span class="float-anim">🌙</span></div>
+        <h2>Tu forma de ser me encanta</h2>
+        <p>Eres completamente única 🦋. La manera en que piensas, en que ves el mundo, en que te preocupas genuinamente por las personas que quieres... todo en ti es real y especial. No tienes que fingir nada ni ser nadie más. En un mundo lleno de ruido, tu voz es la que me pone en paz 🌿. Podría escucharte hablar durante horas sobre cualquier cosa y nunca cansarme. Eso no lo encontré antes, y sé que no lo encontraré en ningún otro lugar.</p>
+      </div>
+    </div>
+
+    <div id="s3" class="section">
+      <div class="card">
+        <div class="card-icon"><span class="float-anim">🦋</span></div>
+        <h2>Me haces mejor persona</h2>
+        <p>Desde que estás en mi vida, algo cambió en mí ✨. Me veo con otros ojos, quiero más de mí misma, quiero merecer lo que me das. Me inspiras sin proponértelo, con tu forma de enfrentar las cosas, con tu valentía silenciosa, con ese corazón tan grande que tienes 💛. Con tu luz encuentro fuerzas que no sabía que tenía. Y aunque los días difíciles lleguen, contigo siento que puedo con todo. Gracias por hacerme querer ser mejor cada día 🌱.</p>
+      </div>
+    </div>
+
+    <div id="s4" class="section">
+      <div class="card">
+        <div class="card-icon"><span class="float-anim">🎵</span></div>
+        <h2>Nuestra historia es mi favorita</h2>
+        <p>Cada momento contigo es una nota en la melodía más bonita que he vivido 🎶. Los pequeños detalles, las conversaciones que se alargaban sin querer, las risas que llegaron cuando menos las esperaba — todo eso lo guardo como un tesoro 🌟. No sé exactamente cómo llegaste, pero sé que fue en el momento justo. Nuestra historia apenas está comenzando y ya es la que más me gusta. No puedo esperar para ver todo lo que nos falta por escribir juntas 🌷.</p>
+      </div>
+    </div>
+
+    <div id="s5" class="section">
+      <div class="card">
+        <div class="card-icon"><span class="float-anim">💌</span></div>
+        <h2>Te amo porque eres tú</h2>
+        <p>No necesito una razón específica, aunque tengo miles 💜. Te amo por todo lo que eres, por todo lo que me das sin darte cuenta, por cada mirada, por cada mensaje, por cada momento en que estás y también por cuando te extraño tanto que me recuerda lo importante que eres. Te amo en los días fáciles y te amo más todavía en los difíciles 🌸. Eres la persona más especial que tengo, y eso no va a cambiar.</p>
+        <div class="emoji-row">💜 🌸 💜 🌸 💜</div>
+      </div>
+    </div>
+
+    <div id="s6" class="section">
+      <div class="card center-text">
+        <div class="card-icon"><span class="float-anim">🌹</span></div>
+        <h2>¿Nos vamos a amar toda la vida? 🌷</h2>
+        <p>Las cosas pueden ponerse difíciles, el camino puede complicarse 🌧️. Pero lo que siento por ti no tiene fecha de vencimiento. Quiero que sepas que estoy aquí, que voy en serio, y que todo lo que construyamos juntas va a valer cada esfuerzo. Solo necesito escucharte decir que sí ✨.</p>
+        <br>
+        <button class="yes-btn" onclick="responder()">💜 ¡Sí, toda la vida! 💜</button>
+        <div id="respuesta" class="response-box">
+          <div class="response-emoji">🎉🌸💜🌸🎉</div>
+          <h3>¡Vamos a luchar por todo!</h3>
+          <p>Vamos a luchar por esto, por nosotras, por cada sueño que tengamos juntas 🌟. Las dificultades van a llegar, sí — pero también vamos a poder con ellas. Te amo muchísimo, más de lo que cualquier palabra puede decir 💜. Gracias por elegirme. Esto apenas comienza 🧸🌸.</p>
+          <div class="emoji-row" style="margin-top:14px;">🌹🌸💜🌸🌹</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function show(id, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function responder() {
+      document.getElementById('respuesta').classList.add('show');
+      document.querySelector('.yes-btn').style.display = 'none';
+    }
+
+    // Pétalos cayendo
+    const emojis = ['🌸','🌷','💜','🦋','✨','💕','🍃','🌺'];
+    const container = document.getElementById('petals');
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      p.style.left = Math.random() * 95 + '%';
+      p.style.animationDuration = (5 + Math.random() * 6) + 's';
+      p.style.animationDelay = (Math.random() * 7) + 's';
+      p.style.fontSize = (13 + Math.random() * 10) + 'px';
+      container.appendChild(p);
+    }
+  </script>
+
+</body>
+</html>
